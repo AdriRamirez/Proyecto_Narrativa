@@ -27,7 +27,7 @@ public class EventHandleDialogue : MonoBehaviour
     }
     private void Update()
     {
-        //var playerScript = player.GetComponent<FirstPersonMovement>(); 
+        var playerScript = player.GetComponent<FirstPersonMovement>(); 
         var cameraScript = camera.GetComponent<FirstPersonLook>();
 
         if (!ConversationManager.Instance.IsConversationActive && isDialogTriggered)
@@ -35,10 +35,10 @@ public class EventHandleDialogue : MonoBehaviour
             isDialogTriggered = false;
             Cursor.lockState = CursorLockMode.Locked;
 
-            //if (playerScript != null)
-            //{
-            //    playerScript.enabled = true;
-            //}
+            if (playerScript != null)
+            {
+                playerScript.speed = 5;
+            }
             if (cameraScript != null)
             {
                 cameraScript.sensitivity = 2;
@@ -57,14 +57,14 @@ public class EventHandleDialogue : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Confined;
 
-            //var playerScript = player.GetComponent<FirstPersonMovement>(); 
+            var playerScript = player.GetComponent<FirstPersonMovement>(); 
            
-            var cameraScript = camera.GetComponent<FirstPersonLook>(); 
-           
-            //if (playerScript != null)
-            //{
-            //    playerScript.enabled = false;
-            //}
+            var cameraScript = camera.GetComponent<FirstPersonLook>();
+
+            if (playerScript != null)
+            {
+                playerScript.speed = 0;
+            }
             if (cameraScript != null)
             {
                 cameraScript.sensitivity = 0;
