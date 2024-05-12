@@ -26,8 +26,8 @@ public class CardSelection : MonoBehaviour
             leftCardPanel.SetActive(true);
             rightCardPanel.SetActive(true);
 
-            var playerScript = player.GetComponent<BasicBehaviour>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-            var cameraScript = camera.GetComponent<ThirdPersonOrbitCamBasic>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+            var playerScript = player.GetComponent<FirstPersonMovement>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+            var cameraScript = camera.GetComponent<FirstPersonLook>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
 
             if (playerScript != null)
             {
@@ -45,8 +45,8 @@ public class CardSelection : MonoBehaviour
             leftCardPanel.SetActive(false);
             rightCardPanel.SetActive(false);
 
-            var playerScript = player.GetComponent<BasicBehaviour>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-            var cameraScript = camera.GetComponent<ThirdPersonOrbitCamBasic>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+            var playerScript = player.GetComponent<FirstPersonMovement>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+            var cameraScript = camera.GetComponent<FirstPersonLook>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
             if (playerScript != null)
             {
                 playerScript.enabled = true;

@@ -24,21 +24,22 @@ public class EventHandleDialogue : MonoBehaviour
     }
     private void Update()
     {
-        var playerScript = player.GetComponent<BasicBehaviour>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-        var cameraScript = camera.GetComponent<ThirdPersonOrbitCamBasic>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+        //var playerScript = player.GetComponent<FirstPersonMovement>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+        //var cameraScript = camera.GetComponent<FirstPersonLook>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
 
         if (!ConversationManager.Instance.IsConversationActive && isDialogTriggered)
         {
             isDialogTriggered = false;
+            Cursor.lockState = CursorLockMode.Locked;
 
-            if (playerScript != null)
-            {
-                playerScript.enabled = true;
-            }
-            if (cameraScript != null)
-            {
-                cameraScript.enabled = true;
-            }
+            //if (playerScript != null)
+            //{
+            //    playerScript.enabled = true;
+            //}
+            //if (cameraScript != null)
+            //{
+            //    cameraScript.enabled = true;
+            //}
         }
     }
 
@@ -49,17 +50,19 @@ public class EventHandleDialogue : MonoBehaviour
             ConversationManager.Instance.StartConversation(Conversation);
             isDialogTriggered = true;
 
-            var playerScript = player.GetComponent<BasicBehaviour>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-            var cameraScript = camera.GetComponent<ThirdPersonOrbitCamBasic>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+            Cursor.lockState = CursorLockMode.Confined;
 
-            if (playerScript != null)
-            {
-                playerScript.enabled = false;
-            }
-            if (cameraScript != null)
-            {
-                cameraScript.enabled = false;
-            }
+            //var playerScript = player.GetComponent<FirstPersonMovement>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+            //var cameraScript = camera.GetComponent<FirstPersonLook>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+
+            //if (playerScript != null)
+            //{
+            //    playerScript.enabled = false;
+            //}
+            //if (cameraScript != null)
+            //{
+            //    cameraScript.enabled = false;
+            //}
 
         }
     
