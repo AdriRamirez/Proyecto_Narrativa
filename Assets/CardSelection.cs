@@ -9,6 +9,9 @@ public class CardSelection : MonoBehaviour
     public GameObject player;
     public GameObject camera;
 
+    public Transform cameraTarget;
+
+    public bool isCardsTriggered = false;
 
 
     void Start()
@@ -18,45 +21,64 @@ public class CardSelection : MonoBehaviour
         rightCardPanel.SetActive(false);
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            StartCards();
+
+        }
+
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (isCardsTriggered)
         {
-            // Mostrar ambos paneles al presionar la tecla F
+            
             leftCardPanel.SetActive(true);
             rightCardPanel.SetActive(true);
 
-            var playerScript = player.GetComponent<FirstPersonMovement>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-            var cameraScript = camera.GetComponent<FirstPersonLook>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+            var playerScript = player.GetComponent<FirstPersonMovement>();
+            var cameraScript = camera.GetComponent<FirstPersonLook>();
 
             if (playerScript != null)
             {
-                playerScript.enabled = false;
+                playerScript.speed = 0;
             }
             if (cameraScript != null)
             {
-                cameraScript.enabled = false;
+                cameraScript.sensitivity = 0;
+                cameraScript.inDialog = false;
+
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.H))
+        if(!isCardsTriggered)
         {
-            // Mostrar ambos paneles al presionar la tecla F
+            
             leftCardPanel.SetActive(false);
             rightCardPanel.SetActive(false);
 
-            var playerScript = player.GetComponent<FirstPersonMovement>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-            var cameraScript = camera.GetComponent<FirstPersonLook>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+            var playerScript = player.GetComponent<FirstPersonMovement>();
+            var cameraScript = camera.GetComponent<FirstPersonLook>();
             if (playerScript != null)
             {
-                playerScript.enabled = true;
+                playerScript.speed = 5;
             }
             if (cameraScript != null)
             {
-                cameraScript.enabled = true;
+                cameraScript.sensitivity = 2;
+                cameraScript.inDialog = false;
+
             }
         }
       
        
+    }
+
+    void StartCards()
+    {
+        isCardsTriggered = true;
     }
 }
