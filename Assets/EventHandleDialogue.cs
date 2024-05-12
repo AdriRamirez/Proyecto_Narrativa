@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DialogueEditor;
+using UnityEngine.TextCore.Text;
 
 public class EventHandleDialogue : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class EventHandleDialogue : MonoBehaviour
 
     public GameObject player;
     public GameObject camera;
+
+    public Transform cameraTarget;
 
     public bool isDialogTriggered = false;
 
@@ -24,8 +27,8 @@ public class EventHandleDialogue : MonoBehaviour
     }
     private void Update()
     {
-        //var playerScript = player.GetComponent<FirstPersonMovement>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-        //var cameraScript = camera.GetComponent<FirstPersonLook>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
+        //var playerScript = player.GetComponent<FirstPersonMovement>(); 
+        var cameraScript = camera.GetComponent<FirstPersonLook>();
 
         if (!ConversationManager.Instance.IsConversationActive && isDialogTriggered)
         {
@@ -36,10 +39,12 @@ public class EventHandleDialogue : MonoBehaviour
             //{
             //    playerScript.enabled = true;
             //}
-            //if (cameraScript != null)
-            //{
-            //    cameraScript.enabled = true;
-            //}
+            if (cameraScript != null)
+            {
+                cameraScript.sensitivity = 2;
+                cameraScript.inDialog = false;
+                
+            }
         }
     }
 
@@ -52,17 +57,22 @@ public class EventHandleDialogue : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Confined;
 
-            //var playerScript = player.GetComponent<FirstPersonMovement>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-            //var cameraScript = camera.GetComponent<FirstPersonLook>(); // Reemplaza "OtherScript" con el nombre real del script que deseas desactivar
-
+            //var playerScript = player.GetComponent<FirstPersonMovement>(); 
+           
+            var cameraScript = camera.GetComponent<FirstPersonLook>(); 
+           
             //if (playerScript != null)
             //{
             //    playerScript.enabled = false;
             //}
-            //if (cameraScript != null)
-            //{
-            //    cameraScript.enabled = false;
-            //}
+            if (cameraScript != null)
+            {
+                cameraScript.sensitivity = 0;
+                cameraScript.inDialog = true;
+                camera.transform.LookAt(cameraTarget);
+                
+
+            }
 
         }
     
