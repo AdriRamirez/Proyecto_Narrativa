@@ -1,10 +1,10 @@
-#Mirlan Alpha
+# Mirlan Alpha
 
-##Basic Mechanics:
+## Basic Mechanics:
 NPC Dialogue
 Combat Event with Randomness
 
-##Controls:
+## Controls:
 E to interact with NPC
 WASD to move
 Mouse to move camera
