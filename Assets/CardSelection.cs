@@ -15,6 +15,8 @@ public class CardSelection : MonoBehaviour
 
     public Transform cameraTarget;
 
+    FirstPersonMovement playerScript;
+    FirstPersonLook cameraScript;
 
 
     public bool isCardsTriggered = false;
@@ -24,6 +26,9 @@ public class CardSelection : MonoBehaviour
     void Start()
     {
 
+        playerScript = player.GetComponent<FirstPersonMovement>();
+        cameraScript = camera.GetComponent<FirstPersonLook>();
+        
         ElectionScreen.SetActive(false);
         DiceScreen.SetActive(false);
 
@@ -45,16 +50,12 @@ public class CardSelection : MonoBehaviour
 
     void Update()
     {
-        if (!isCardsTriggered)
+
+        if (!isCardsTriggered && !cameraScript.inDialog)
         {
 
             ElectionScreen.SetActive(false);
             DiceScreen.SetActive(false);
-
-
-
-            var playerScript = player.GetComponent<FirstPersonMovement>();
-            var cameraScript = camera.GetComponent<FirstPersonLook>();
 
 
             Cursor.lockState = CursorLockMode.Locked;
@@ -65,7 +66,7 @@ public class CardSelection : MonoBehaviour
             if (cameraScript != null)
             {
                 cameraScript.sensitivity = 2;
-                cameraScript.inDialog = false;
+                cameraScript.inCards = false;
 
             }
         }
@@ -76,15 +77,12 @@ public class CardSelection : MonoBehaviour
     void StartCards()
     {
         isCardsTriggered = true;
-        if (isCardsTriggered)
+        if (isCardsTriggered && !cameraScript.inDialog)
         {
 
             Cursor.lockState = CursorLockMode.Confined;
             ElectionScreen.SetActive(true);
            
-
-            var playerScript = player.GetComponent<FirstPersonMovement>();
-            var cameraScript = camera.GetComponent<FirstPersonLook>();
 
             if (playerScript != null)
             {
@@ -93,7 +91,7 @@ public class CardSelection : MonoBehaviour
             if (cameraScript != null)
             {
                 cameraScript.sensitivity = 0;
-                cameraScript.inDialog = true;
+                cameraScript.inCards = true;
                 camera.transform.LookAt(cameraTarget);
 
             }

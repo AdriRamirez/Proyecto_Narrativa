@@ -11,10 +11,20 @@ public class EventHandleDialogue : MonoBehaviour
 
     public GameObject player;
     public GameObject camera;
+    
 
     public Transform cameraTarget;
 
+    FirstPersonMovement playerScript;
+    FirstPersonLook cameraScript;
+
     public bool isDialogTriggered = false;
+
+    private void Start()
+    {
+        playerScript = player.GetComponent<FirstPersonMovement>();
+        cameraScript = camera.GetComponent<FirstPersonLook>();
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -27,10 +37,9 @@ public class EventHandleDialogue : MonoBehaviour
     }
     private void Update()
     {
-        var playerScript = player.GetComponent<FirstPersonMovement>(); 
-        var cameraScript = camera.GetComponent<FirstPersonLook>();
+    
 
-        if (!ConversationManager.Instance.IsConversationActive && isDialogTriggered)
+        if (!ConversationManager.Instance.IsConversationActive && isDialogTriggered && !cameraScript.inCards)
         {
             isDialogTriggered = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -50,16 +59,12 @@ public class EventHandleDialogue : MonoBehaviour
 
     private void StartDialog()
     {
-        if(Conversation != null && !isDialogTriggered)
+        if(Conversation != null && !isDialogTriggered && !cameraScript.inCards)
         {
             ConversationManager.Instance.StartConversation(Conversation);
             isDialogTriggered = true;
 
             Cursor.lockState = CursorLockMode.Confined;
-
-            var playerScript = player.GetComponent<FirstPersonMovement>(); 
-           
-            var cameraScript = camera.GetComponent<FirstPersonLook>();
 
             if (playerScript != null)
             {
