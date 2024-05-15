@@ -73,8 +73,9 @@ public class EventHandleDialogue : MonoBehaviour
             if (cameraScript != null)
             {
                 cameraScript.sensitivity = 0;
-                cameraScript.inDialog = true;
                 camera.transform.LookAt(cameraTarget);
+                cameraScript.inDialog = true;
+                
                 
 
             }
