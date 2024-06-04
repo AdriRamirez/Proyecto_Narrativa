@@ -6,7 +6,9 @@ using UnityEngine.TextCore.Text;
 
 public class EventHandleDialogue : MonoBehaviour
 {
-    public NPCConversation Conversation;
+    public NPCConversation Conversation1;
+    public NPCConversation Conversation2;
+    public NPCConversation Conversation3;
     public KeyCode DialogKey = KeyCode.E;
 
     public GameObject player;
@@ -18,7 +20,11 @@ public class EventHandleDialogue : MonoBehaviour
     FirstPersonMovement playerScript;
     FirstPersonLook cameraScript;
 
-    public bool isDialogTriggered = false;
+    bool isDialogTriggered = false;
+
+    bool isDialog1 = false;
+    bool isDialog2 = false;
+    bool isDialog3 = false;
 
     private void Start()
     {
@@ -59,28 +65,56 @@ public class EventHandleDialogue : MonoBehaviour
 
     private void StartDialog()
     {
-        if(Conversation != null && !isDialogTriggered && !cameraScript.inCards)
+        Cursor.lockState = CursorLockMode.Confined;
+        isDialog1 = true;
+
+        //Player movemente restrictions
+        if (playerScript != null)
         {
-            ConversationManager.Instance.StartConversation(Conversation);
-            isDialogTriggered = true;
-
-            Cursor.lockState = CursorLockMode.Confined;
-
-            if (playerScript != null)
-            {
-                playerScript.speed = 0;
-            }
-            if (cameraScript != null)
-            {
-                cameraScript.sensitivity = 0;
-                camera.transform.LookAt(cameraTarget);
-                cameraScript.inDialog = true;
-                
-                
-
-            }
-
+            playerScript.speed = 0;
         }
-    
+        if (cameraScript != null)
+        {
+            cameraScript.sensitivity = 0;
+            camera.transform.LookAt(cameraTarget);
+            cameraScript.inDialog = true;
+        }
+
+        //Dialogue trigger script
+        if(!isDialogTriggered && !cameraScript.inCards) 
+        {
+            if (Conversation1 != null && isDialog1)
+            {
+                ConversationManager.Instance.StartConversation(Conversation1);
+                isDialogTriggered = true;
+                
+            }
+
+            if (Conversation2 != null && isDialog2)
+            {
+                ConversationManager.Instance.StartConversation(Conversation2);
+                isDialogTriggered = true;
+  
+            }
+            
+            if (Conversation3 != null && isDialog3)
+            {
+                ConversationManager.Instance.StartConversation(Conversation3);
+                isDialogTriggered = true;
+                
+            }
+        }
+        
+    }
+
+    public void TriggerDialogue2()
+    {
+        Debug.Log("patata");
+        isDialog2 = true;
+    }
+    public void TriggerDialogue3()
+    {
+        Debug.Log("cookie");
+        isDialog3 = true;
     }
 }

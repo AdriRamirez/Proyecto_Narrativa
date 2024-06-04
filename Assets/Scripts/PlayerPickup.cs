@@ -53,7 +53,7 @@ public class PlayerPickup : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         // Cuando el jugador sale del rango del objeto recogible
-        if (other.CompareTag("Collectible"))
+        if (other.CompareTag("Cogible"))
         {
             currentItem = null;
             // Ocultar el mensaje en la pantalla o el indicador para el jugador aquí
