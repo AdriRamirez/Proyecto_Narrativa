@@ -12,21 +12,45 @@ public class CardSelection : MonoBehaviour
     public GameObject numDado;
     public GameObject yourResult;
 
+    public NPCConversation StartDescription;
+
     [System.Serializable]
-    public class StoneOption
+    public class StoneOptions
     {
         public NPCConversation Stone_Suc_1;
         public NPCConversation Stone_Fail_1;
     }
-    public StoneOption stoneOptions;
-    public NPCConversation StartDescription;
+    public StoneOptions stoneOptions;
 
-    public NPCConversation Run_Suc_1;
-    public NPCConversation Run_Fail_1;
+    [System.Serializable]
+    public class RunOptions
+    {
+        public NPCConversation Run_Suc_1;
+        public NPCConversation Run_Fail_1;
+    }
+    public RunOptions runOptions;
+
+    [System.Serializable]
+    public class SpearOptions
+    {
+        public NPCConversation Spear_Suc_1;
+        public NPCConversation Spear_Fail_1;
+    }
+    public SpearOptions spearOptions;
+
+    [System.Serializable]
+    public class FoodOptions
+    {
+        public NPCConversation Food_Suc_1;
+        public NPCConversation Food_Fail_1;
+    }
+    public FoodOptions foodOptions;
+
 
     public GameObject player;
     public GameObject camera;
 
+    [HideInInspector]
     public int yourRoll;
 
     public RectTransform conversationManager;
@@ -123,22 +147,44 @@ public class CardSelection : MonoBehaviour
         
     }
 
-    public void GoToDiceScreen()
+    public void DiceScreen_stone()
     {
         objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
 
-        string objectiveNum = "10";
+        string objectiveNum = "8";
         ElectionScreen.SetActive(false);
         DiceScreen.SetActive(true);
         objectiveDice.text = objectiveNum;
     }
 
-    public void GoToDiceScreen2()
+    public void DiceScreen_run()
     {
 
         objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
 
         string  objectiveNum = "15";
+        ElectionScreen.SetActive(false);
+        DiceScreen.SetActive(true);
+        objectiveDice.text = objectiveNum;
+    }
+
+    public void DiceScreen_spear()
+    {
+
+        objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
+
+        string objectiveNum = "5";
+        ElectionScreen.SetActive(false);
+        DiceScreen.SetActive(true);
+        objectiveDice.text = objectiveNum;
+    }
+
+    public void DiceScreen_food()
+    {
+
+        objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
+
+        string objectiveNum = "8";
         ElectionScreen.SetActive(false);
         DiceScreen.SetActive(true);
         objectiveDice.text = objectiveNum;
@@ -154,25 +200,44 @@ public class CardSelection : MonoBehaviour
 
             tirada.text = yourRoll.ToString();
 
-            //Option Huir
+            //Stone Option
             if (yourRoll >= 10 && objectiveDice.text == "10")
             {
-                NPCConversation a = stoneOptions.Stone_Suc_1;
-                ConversationManager.Instance.StartConversation(a);
+                ConversationManager.Instance.StartConversation(stoneOptions.Stone_Suc_1);
             }
             else if (yourRoll < 10 && objectiveDice.text == "10")
             {
-                NPCConversation b = stoneOptions.Stone_Fail_1;
-                ConversationManager.Instance.StartConversation(b);
+                ConversationManager.Instance.StartConversation(stoneOptions.Stone_Fail_1);
             }
-            //Option Stone
+
+            //Run Option
             if (yourRoll >= 15 && objectiveDice.text == "15")
             {
-                ConversationManager.Instance.StartConversation(Run_Suc_1);
+                ConversationManager.Instance.StartConversation(runOptions.Run_Suc_1);
             }
             else if (yourRoll < 15 && objectiveDice.text == "15")
             {
-                ConversationManager.Instance.StartConversation(Run_Fail_1);
+                ConversationManager.Instance.StartConversation(runOptions.Run_Fail_1);
+            }
+
+            //Spear Option
+            if (yourRoll >= 5 && objectiveDice.text == "5")
+            {
+                ConversationManager.Instance.StartConversation(spearOptions.Spear_Suc_1);
+            }
+            else if (yourRoll < 5 && objectiveDice.text == "5")
+            {
+                ConversationManager.Instance.StartConversation(spearOptions.Spear_Fail_1);
+            }
+
+            //Food Option
+            if (yourRoll >= 8 && objectiveDice.text == "8")
+            {
+                ConversationManager.Instance.StartConversation(foodOptions.Food_Suc_1);
+            }
+            else if (yourRoll < 8 && objectiveDice.text == "8")
+            {
+                ConversationManager.Instance.StartConversation(foodOptions.Food_Fail_1);
             }
         }
        
