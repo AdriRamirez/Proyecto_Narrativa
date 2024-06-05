@@ -30,11 +30,10 @@ public class CardSelection : MonoBehaviour
 
     TextMeshProUGUI objectiveDice;
 
-    public Inventory inventory;
-
     public bool isCardsTriggered = false;
     bool Continue = true;
 
+    public FoodEvent foodEvent;
 
     void Start()
     {
@@ -64,7 +63,7 @@ public class CardSelection : MonoBehaviour
     void Update()
     {
 
-        if (!isCardsTriggered && !cameraScript.inDialog)
+        if (!isCardsTriggered && !cameraScript.inDialog && !foodEvent.inFoodEvent)
         {
 
             ElectionScreen.SetActive(false);
@@ -139,20 +138,24 @@ public class CardSelection : MonoBehaviour
 
     public void RollDice()
     {
-        yourRoll = Random.Range(1, 20);
-
-        TextMeshProUGUI tirada = yourResult.GetComponent<TextMeshProUGUI>();
-
-        tirada.text = yourRoll.ToString();
-
-        if(yourRoll >= 10 && objectiveDice.text == "10")
+        if(isCardsTriggered)
         {
-            ConversationManager.Instance.StartConversation(BattleDialogue2);
+            yourRoll = Random.Range(1, 20);
+
+            TextMeshProUGUI tirada = yourResult.GetComponent<TextMeshProUGUI>();
+
+            tirada.text = yourRoll.ToString();
+
+            if (yourRoll >= 10 && objectiveDice.text == "10")
+            {
+                ConversationManager.Instance.StartConversation(BattleDialogue2);
+            }
+            else if (yourRoll < 10 && objectiveDice.text == "10")
+            {
+                ConversationManager.Instance.StartConversation(BattleDialogue3);
+            }
         }
-        else if (yourRoll < 10 && objectiveDice.text == "10")
-        {
-            ConversationManager.Instance.StartConversation(BattleDialogue3);
-        }
+       
 
     }
 
@@ -163,6 +166,9 @@ public class CardSelection : MonoBehaviour
 
         conversationManager.anchoredPosition = new Vector2(0, 0);
         ConversationManager.Instance.EndConversation();
+        foodEvent.ContinueFood = false;
+        foodEvent.inFoodEvent = false;
+
     }
 
 

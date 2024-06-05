@@ -11,6 +11,11 @@ public class PlayerPickup : MonoBehaviour
     public GameObject inventoryPanel; // Panel de inventario
     public TextMeshProUGUI inventoryText; // Texto del inventario
 
+    public GameObject objectivePanel; // Panel de objetivos
+
+    public CardSelection cardsScript;
+    public FoodEvent foodEvent;
+
     void Start()
     {
         inventory = GetComponent<Inventory>();
@@ -27,11 +32,7 @@ public class PlayerPickup : MonoBehaviour
 
     void Update()
     {
-        // Si el jugador está en rango de un objeto y presiona "E"
-        if (currentItem != null && Input.GetKeyDown(KeyCode.E))
-        {
-            PickUp();
-        }
+        
 
         // Mostrar/ocultar inventario al presionar "I"
         if (Input.GetKeyDown(KeyCode.I))
@@ -40,13 +41,31 @@ public class PlayerPickup : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         // Verifica si el objeto tiene la etiqueta "Collectible" y está dentro del rango de recogida
         if (other.CompareTag("Cogible") && Vector3.Distance(transform.position, other.transform.position) <= pickupRange)
         {
             currentItem = other.gameObject;
             // Mostrar un mensaje en la pantalla o un indicador para el jugador aquí
+        }
+
+        // Si el jugador está en rango de un objeto y presiona "E"
+        if (currentItem != null && Input.GetKeyDown(KeyCode.E) && currentItem.name == "food")
+        {
+           if(foodEvent.ContinueFood)
+           { 
+                foodEvent.GoToDiceScreen();
+                foodEvent.ContinueFood = false;
+           }
+            
+
+            if (foodEvent.yourRoll > 2)
+            {
+                PickUp();
+            }
+            
+
         }
     }
 
@@ -58,6 +77,8 @@ public class PlayerPickup : MonoBehaviour
             currentItem = null;
             // Ocultar el mensaje en la pantalla o el indicador para el jugador aquí
         }
+
+      
     }
 
     void PickUp()
@@ -70,7 +91,12 @@ public class PlayerPickup : MonoBehaviour
             // Desactiva el objeto recogido
             currentItem.SetActive(false);
 
+            // Elimina el texto del objetivo correspondiente
+            UpdateObjectiveUI(currentItem.name);
+
             currentItem = null; // Resetea la referencia al objeto recogido
+
+
         }
     }
 
@@ -85,6 +111,21 @@ public class PlayerPickup : MonoBehaviour
             {
                 // Actualiza el texto del inventario
                 inventoryText.text = inventory.GetInventoryText();
+            }
+        }
+    }
+
+    void UpdateObjectiveUI(string itemName)
+    {
+        if (objectivePanel != null)
+        {
+            foreach (Transform child in objectivePanel.transform)
+            {
+                TextMeshProUGUI objectiveText = child.GetComponent<TextMeshProUGUI>();
+                if (objectiveText != null && objectiveText.text.Contains(itemName))
+                {
+                    objectiveText.text = ""; // Eliminar el texto del objetivo correspondiente
+                }
             }
         }
     }
