@@ -11,6 +11,8 @@ public class PlayerPickup : MonoBehaviour
     public GameObject inventoryPanel; // Panel de inventario
     public TextMeshProUGUI inventoryText; // Texto del inventario
 
+    public GameObject interactText; // Texto del inventario
+
     public GameObject objectivePanel; // Panel de objetivos
 
     public CardSelection cardsScript;
@@ -18,6 +20,8 @@ public class PlayerPickup : MonoBehaviour
 
     void Start()
     {
+        interactText.SetActive(false);
+
         inventory = GetComponent<Inventory>();
         if (inventory == null)
         {
@@ -43,6 +47,15 @@ public class PlayerPickup : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        if(!foodEvent.inFoodEvent)
+        {
+            interactText.SetActive(true);
+        }
+        else
+        {
+            interactText.SetActive(false);
+        }
+        
         // Verifica si el objeto tiene la etiqueta "Collectible" y está dentro del rango de recogida
         if (other.CompareTag("Cogible") && Vector3.Distance(transform.position, other.transform.position) <= pickupRange)
         {
@@ -53,7 +66,8 @@ public class PlayerPickup : MonoBehaviour
         // Si el jugador está en rango de un objeto y presiona "E"
         if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "food")
         {
-           if(foodEvent.ContinueFood)
+           
+            if (foodEvent.ContinueFood)
            { 
                 foodEvent.GoToDiceScreen();
                 foodEvent.ContinueFood = false;
@@ -71,6 +85,8 @@ public class PlayerPickup : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        interactText.SetActive(false);
+
         // Cuando el jugador sale del rango del objeto recogible
         if (other.CompareTag("Cogible"))
         {
