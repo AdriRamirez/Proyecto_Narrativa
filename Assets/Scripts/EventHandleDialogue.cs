@@ -13,6 +13,8 @@ public class EventHandleDialogue : MonoBehaviour
 
     public GameObject player;
     public GameObject camera;
+
+    public GameObject hud;
     
 
     public Transform cameraTarget;
@@ -109,12 +111,12 @@ public class EventHandleDialogue : MonoBehaviour
 
     public void TriggerDialogue2()
     {
-        Debug.Log("patata");
+        hud.SetActive(true);
         isDialog2 = true;
     }
     public void TriggerDialogue3()
     {
-        Debug.Log("cookie");
+        
         isDialog3 = true;
     }
 }
