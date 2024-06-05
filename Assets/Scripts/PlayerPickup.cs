@@ -64,7 +64,7 @@ public class PlayerPickup : MonoBehaviour
         }
 
         // Si el jugador está en rango de un objeto y presiona "E"
-        if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "lemons")
+        if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "lemonfood")
         {
            
             if (foodEvent.ContinueFood)
@@ -80,7 +80,7 @@ public class PlayerPickup : MonoBehaviour
             }
             
 
-        }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "deer")
+        }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "deer food")
         {
 
             if (foodEvent.ContinueFood)

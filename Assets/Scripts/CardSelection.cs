@@ -12,9 +12,17 @@ public class CardSelection : MonoBehaviour
     public GameObject numDado;
     public GameObject yourResult;
 
-    public NPCConversation BattleDialogue1;
-    public NPCConversation BattleDialogue2;
-    public NPCConversation BattleDialogue3;
+    [System.Serializable]
+    public class StoneOption
+    {
+        public NPCConversation Stone_Suc_1;
+        public NPCConversation Stone_Fail_1;
+    }
+    public StoneOption stoneOptions;
+    public NPCConversation StartDescription;
+
+    public NPCConversation Run_Suc_1;
+    public NPCConversation Run_Fail_1;
 
     public GameObject player;
     public GameObject camera;
@@ -94,7 +102,7 @@ public class CardSelection : MonoBehaviour
         
         if (isCardsTriggered && !cameraScript.inDialog)
         {
-            ConversationManager.Instance.StartConversation(BattleDialogue1);
+            ConversationManager.Instance.StartConversation(StartDescription);
             UnityEngine.Cursor.lockState = CursorLockMode.Confined;
             ElectionScreen.SetActive(true);
            
@@ -146,13 +154,25 @@ public class CardSelection : MonoBehaviour
 
             tirada.text = yourRoll.ToString();
 
+            //Option Huir
             if (yourRoll >= 10 && objectiveDice.text == "10")
             {
-                ConversationManager.Instance.StartConversation(BattleDialogue2);
+                NPCConversation a = stoneOptions.Stone_Suc_1;
+                ConversationManager.Instance.StartConversation(a);
             }
             else if (yourRoll < 10 && objectiveDice.text == "10")
             {
-                ConversationManager.Instance.StartConversation(BattleDialogue3);
+                NPCConversation b = stoneOptions.Stone_Fail_1;
+                ConversationManager.Instance.StartConversation(b);
+            }
+            //Option Stone
+            if (yourRoll >= 15 && objectiveDice.text == "15")
+            {
+                ConversationManager.Instance.StartConversation(Run_Suc_1);
+            }
+            else if (yourRoll < 15 && objectiveDice.text == "15")
+            {
+                ConversationManager.Instance.StartConversation(Run_Fail_1);
             }
         }
        
