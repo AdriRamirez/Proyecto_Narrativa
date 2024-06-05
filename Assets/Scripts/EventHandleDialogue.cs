@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DialogueEditor;
 using UnityEngine.TextCore.Text;
+using static UnityEditor.Profiling.RawFrameDataView;
 
 public class EventHandleDialogue : MonoBehaviour
 {
@@ -22,30 +23,46 @@ public class EventHandleDialogue : MonoBehaviour
     FirstPersonMovement playerScript;
     FirstPersonLook cameraScript;
 
-    bool isDialogTriggered = false;
+    public bool isDialogTriggered = false;
 
     bool isDialog1 = false;
     bool isDialog2 = false;
     bool isDialog3 = false;
 
+    public GameObject interactText;
+
     private void Start()
     {
+
+
         playerScript = player.GetComponent<FirstPersonMovement>();
         cameraScript = camera.GetComponent<FirstPersonLook>();
     }
 
     private void OnTriggerStay(Collider other)
     {
+
+        if (!isDialogTriggered)
+        {
+            interactText.SetActive(true);
+        }
+       
+
         if (other.gameObject.tag == "Player" && Input.GetKey(DialogKey))
         {
             StartDialog();
+            interactText.SetActive(false);
 
         }
+
+        
+
 
     }
     private void Update()
     {
-    
+
+       
 
         if (!ConversationManager.Instance.IsConversationActive && isDialogTriggered && !cameraScript.inCards)
         {

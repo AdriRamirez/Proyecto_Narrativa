@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class FoodEvent : MonoBehaviour
+public class WaterEvent : MonoBehaviour
 {
 
     public GameObject DiceScreen;
@@ -12,6 +12,9 @@ public class FoodEvent : MonoBehaviour
     public GameObject numDado;
     public GameObject yourResult;
 
+    public NPCConversation BattleDialogue1;
+    public NPCConversation BattleDialogue2;
+    public NPCConversation BattleDialogue3;
 
     public GameObject player;
     public GameObject camera;
@@ -30,9 +33,8 @@ public class FoodEvent : MonoBehaviour
     public CardSelection cardSelection;
 
     public bool inFoodEvent;
-    public bool ContinueFood;
+    public bool ContinueWater;
 
-    public NPCConversation Lemons_Win;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +44,7 @@ public class FoodEvent : MonoBehaviour
 
         DiceScreen.SetActive(false);
         inFoodEvent = false;
-        ContinueFood = true;
+        ContinueWater = true;
     }
 
     // Update is called once per frame
@@ -97,11 +99,11 @@ public class FoodEvent : MonoBehaviour
 
             if (yourRoll >= 2 && objectiveDice.text == "2")
             {
-                ConversationManager.Instance.StartConversation(Lemons_Win);
+                ConversationManager.Instance.StartConversation(BattleDialogue2);
             }
             else if (yourRoll < 2 && objectiveDice.text == "2")
             {
-                ConversationManager.Instance.StartConversation(Lemons_Win);
+                ConversationManager.Instance.StartConversation(BattleDialogue3);
             }
         }
       

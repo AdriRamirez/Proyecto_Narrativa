@@ -15,8 +15,11 @@ public class PlayerPickup : MonoBehaviour
 
     public GameObject objectivePanel; // Panel de objetivos
 
+    public EventHandleDialogue EventHandleDialogue;
+
     public CardSelection cardsScript;
     public FoodEvent foodEvent;
+    public WaterEvent waterEvent;
 
     void Start()
     {
@@ -47,11 +50,17 @@ public class PlayerPickup : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if(!foodEvent.inFoodEvent)
+
+        if (!foodEvent.inFoodEvent && !EventHandleDialogue.isDialogTriggered )
         {
             interactText.SetActive(true);
         }
-        else
+        else 
+        {
+            interactText.SetActive(false);
+        }
+
+        if(other.CompareTag("Bear"))
         {
             interactText.SetActive(false);
         }
@@ -66,7 +75,7 @@ public class PlayerPickup : MonoBehaviour
         // Si el jugador está en rango de un objeto y presiona "E"
         if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Lemons")
         {
-           
+            interactText.SetActive(false);
             if (foodEvent.ContinueFood)
             { 
                 foodEvent.GoToDiceScreen();
@@ -82,7 +91,7 @@ public class PlayerPickup : MonoBehaviour
 
         }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Deer")
         {
-
+            interactText.SetActive(false);
             if (foodEvent.ContinueFood)
             {
                 foodEvent.GoToDiceScreen();
@@ -95,7 +104,20 @@ public class PlayerPickup : MonoBehaviour
                 PickUp();
             }
 
+        }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Water")
+        {
 
+            if (foodEvent.ContinueFood)
+            {
+                waterEvent.GoToDiceScreen();
+                waterEvent.ContinueWater = false;
+            }
+
+
+            if (waterEvent.yourRoll > 2)
+            {
+                PickUp();
+            }
         }
     }
 
