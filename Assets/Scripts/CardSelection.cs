@@ -1,6 +1,8 @@
+using DialogueEditor;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class CardSelection : MonoBehaviour
 {
@@ -10,14 +12,25 @@ public class CardSelection : MonoBehaviour
     public GameObject numDado;
     public GameObject yourResult;
 
+    public NPCConversation BattleDialogue1;
+    public NPCConversation BattleDialogue2;
+    public NPCConversation BattleDialogue3;
+
     public GameObject player;
     public GameObject camera;
+
+    public int yourRoll;
+
+    public RectTransform conversationManager;
 
     public Transform cameraTarget;
 
     FirstPersonMovement playerScript;
     FirstPersonLook cameraScript;
 
+    TextMeshProUGUI objectiveDice;
+
+    public Inventory inventory;
 
     public bool isCardsTriggered = false;
     bool Continue = true;
@@ -43,7 +56,7 @@ public class CardSelection : MonoBehaviour
         {
             Continue = false;
             StartCards();
-
+            
         }
 
     }
@@ -58,7 +71,7 @@ public class CardSelection : MonoBehaviour
             DiceScreen.SetActive(false);
 
 
-            Cursor.lockState = CursorLockMode.Locked;
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
             if (playerScript != null)
             {
                 playerScript.speed = 5;
@@ -76,11 +89,14 @@ public class CardSelection : MonoBehaviour
 
     void StartCards()
     {
+        conversationManager.anchoredPosition = new Vector2 (0, -200);
+
         isCardsTriggered = true;
+        
         if (isCardsTriggered && !cameraScript.inDialog)
         {
-
-            Cursor.lockState = CursorLockMode.Confined;
+            ConversationManager.Instance.StartConversation(BattleDialogue1);
+            UnityEngine.Cursor.lockState = CursorLockMode.Confined;
             ElectionScreen.SetActive(true);
            
 
@@ -102,7 +118,7 @@ public class CardSelection : MonoBehaviour
 
     public void GoToDiceScreen()
     {
-        TextMeshProUGUI objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
+        objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
 
         string objectiveNum = "10";
         ElectionScreen.SetActive(false);
@@ -113,7 +129,7 @@ public class CardSelection : MonoBehaviour
     public void GoToDiceScreen2()
     {
 
-        TextMeshProUGUI objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
+        objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
 
         string  objectiveNum = "15";
         ElectionScreen.SetActive(false);
@@ -123,17 +139,30 @@ public class CardSelection : MonoBehaviour
 
     public void RollDice()
     {
-        int yourRoll = Random.Range(1, 20);
+        yourRoll = Random.Range(1, 20);
 
         TextMeshProUGUI tirada = yourResult.GetComponent<TextMeshProUGUI>();
 
         tirada.text = yourRoll.ToString();
+
+        if(yourRoll >= 10 && objectiveDice.text == "10")
+        {
+            ConversationManager.Instance.StartConversation(BattleDialogue2);
+        }
+        else if (yourRoll < 10 && objectiveDice.text == "10")
+        {
+            ConversationManager.Instance.StartConversation(BattleDialogue3);
+        }
+
     }
 
     public void EndCards()
     {
         isCardsTriggered = false;
         Continue = false;
+
+        conversationManager.anchoredPosition = new Vector2(0, 0);
+        ConversationManager.Instance.EndConversation();
     }
 
 

@@ -7,6 +7,7 @@ public class ButtonCreator : MonoBehaviour
     public Transform buttonParent;
     public float spacing = 100f;
 
+
     string item = "patata";
 
     private void Update()
