@@ -53,6 +53,7 @@ public class FoodEvent : MonoBehaviour
         
     }
 
+    //Lemons
     public void GoToDiceScreen()
     {
         conversationManager.anchoredPosition = new Vector2(0, -200);
@@ -84,6 +85,7 @@ public class FoodEvent : MonoBehaviour
         objectiveDice.text = objectiveNum;
     }
 
+    
     public void RollDice()
     {
 

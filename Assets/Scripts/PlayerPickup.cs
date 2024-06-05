@@ -64,14 +64,14 @@ public class PlayerPickup : MonoBehaviour
         }
 
         // Si el jugador está en rango de un objeto y presiona "E"
-        if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "food")
+        if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "lemons")
         {
            
             if (foodEvent.ContinueFood)
-           { 
+            { 
                 foodEvent.GoToDiceScreen();
                 foodEvent.ContinueFood = false;
-           }
+            }
             
 
             if (foodEvent.yourRoll > 2)
@@ -79,6 +79,22 @@ public class PlayerPickup : MonoBehaviour
                 PickUp();
             }
             
+
+        }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "deer")
+        {
+
+            if (foodEvent.ContinueFood)
+            {
+                foodEvent.GoToDiceScreen();
+                foodEvent.ContinueFood = false;
+            }
+
+
+            if (foodEvent.yourRoll > 2)
+            {
+                PickUp();
+            }
+
 
         }
     }
