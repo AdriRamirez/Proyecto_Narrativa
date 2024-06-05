@@ -19,7 +19,7 @@ public class PlayerPickup : MonoBehaviour
 
     public CardSelection cardsScript;
     public FoodEvent foodEvent;
-    public WaterEvent waterEvent;
+
 
     void Start()
     {
@@ -50,8 +50,9 @@ public class PlayerPickup : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        
 
-        if (!foodEvent.inFoodEvent && !EventHandleDialogue.isDialogTriggered )
+        if (!foodEvent.inFoodEvent && !EventHandleDialogue.isDialogTriggered)
         {
             interactText.SetActive(true);
         }
@@ -75,6 +76,7 @@ public class PlayerPickup : MonoBehaviour
         // Si el jugador está en rango de un objeto y presiona "E"
         if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Lemons")
         {
+            
             interactText.SetActive(false);
             if (foodEvent.ContinueFood)
             { 
@@ -83,9 +85,11 @@ public class PlayerPickup : MonoBehaviour
             }
             
 
-            if (foodEvent.yourRoll > 2)
+            if (foodEvent.lemonRoll > 2 && foodEvent.rolled)
             {
                 PickUp();
+                foodEvent.rolled = false;
+                foodEvent.ContinueFood = true;
             }
             
 
@@ -94,14 +98,16 @@ public class PlayerPickup : MonoBehaviour
             interactText.SetActive(false);
             if (foodEvent.ContinueFood)
             {
-                foodEvent.GoToDiceScreen();
+                foodEvent.GoToDiceScreen2();
                 foodEvent.ContinueFood = false;
             }
 
 
-            if (foodEvent.yourRoll > 2)
+            if (foodEvent.deerRoll > 10 && foodEvent.rolled)
             {
                 PickUp();
+                foodEvent.rolled = false;
+                foodEvent.ContinueFood = true;
             }
 
         }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Water")
@@ -109,14 +115,16 @@ public class PlayerPickup : MonoBehaviour
 
             if (foodEvent.ContinueFood)
             {
-                waterEvent.GoToDiceScreen();
-                waterEvent.ContinueWater = false;
+                foodEvent.GoToDiceScreen3();
+                foodEvent.ContinueFood = false;
             }
 
 
-            if (waterEvent.yourRoll > 2)
+            if (foodEvent.waterRoll > 2 && foodEvent.rolled)
             {
                 PickUp();
+                foodEvent.rolled = false;
+                foodEvent.ContinueFood = true;
             }
         }
     }

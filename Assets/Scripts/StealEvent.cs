@@ -20,7 +20,7 @@ public class StealEvent : MonoBehaviour
 
 
     public bool isCardsTriggered = false;
-    bool Continue = true;
+    //bool Continue = true;
 
     // Start is called before the first frame update
     void Start()
