@@ -26,6 +26,7 @@ public class CardSelection : MonoBehaviour
         public NPCConversation Stone_Fail_1;
         public NPCConversation Stone_Suc_2;
         public NPCConversation Stone_Fail_2;
+ 
     }
     public StoneOptions stoneOptions;
 
@@ -46,6 +47,7 @@ public class CardSelection : MonoBehaviour
         public NPCConversation Spear_Fail_1;
         public NPCConversation Spear_Suc_2;
         public NPCConversation Spear_Fail_2;
+
     }
     public SpearOptions spearOptions;
 
@@ -56,6 +58,7 @@ public class CardSelection : MonoBehaviour
         public NPCConversation Food_Fail_1;
         public NPCConversation Food_Suc_2;
         public NPCConversation Food_Fail_2;
+
     }
     public FoodOptions foodOptions;
 
@@ -78,6 +81,9 @@ public class CardSelection : MonoBehaviour
     public bool isCardsTriggered = false;
     bool Continue = true;
     bool isFinalFase = false;
+
+    bool fail;
+    bool suc;
 
     public FoodEvent foodEvent;
 
@@ -379,29 +385,48 @@ public class CardSelection : MonoBehaviour
     }
     public void DiceScreenFinal_stone_op1()
     {
-        objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
-
-        string objectiveNum = "10";
         ElectionScreen.SetActive(false);
         ElectionScreen_Stone.SetActive(false);
         DiceScreen.SetActive(true);
-        objectiveDice.text = objectiveNum;
 
         GameObject continuebutton = continueButton.gameObject;
         continuebutton.SetActive(false);
+
+        objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
+
+        if (yourRoll >= 10)
+        {
+            string objectiveNum = "9";
+            objectiveDice.text = objectiveNum;
+        }
+        else
+        {
+            string objectiveNum = "11";
+            objectiveDice.text = objectiveNum;
+        }
+
     }
     public void DiceScreenFinal_stone_op2()
     {
-        objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
-
-        string objectiveNum = "10";
         ElectionScreen.SetActive(false);
         ElectionScreen_Stone.SetActive(false);
         DiceScreen.SetActive(true);
-        objectiveDice.text = objectiveNum;
 
         GameObject continuebutton = continueButton.gameObject;
         continuebutton.SetActive(false);
+
+        objectiveDice = numDado.GetComponent<TextMeshProUGUI>();
+
+        if (yourRoll >= 10)
+        {
+            string objectiveNum = "10";
+            objectiveDice.text = objectiveNum;
+        }
+        else
+        {
+            string objectiveNum = "13";
+            objectiveDice.text = objectiveNum;
+        }
     }
 
     public void DiceScreenFinal_run_op1()
