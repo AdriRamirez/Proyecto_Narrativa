@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using DialogueEditor;
 using UnityEngine.TextCore.Text;
-using static UnityEditor.Profiling.RawFrameDataView;
 
 public class EventHandleDialogue : MonoBehaviour
 {
