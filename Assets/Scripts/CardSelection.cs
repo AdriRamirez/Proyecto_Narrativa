@@ -310,15 +310,30 @@ public class CardSelection : MonoBehaviour
 
     public void EndCards()
     {
-        isCardsTriggered = false;
-        Continue = false;
-        isFinalFase = false;
-        conversationManager.anchoredPosition = new Vector2(0, 0);
-        ConversationManager.Instance.EndConversation();
-        foodEvent.ContinueFood = false;
-        foodEvent.inFoodEvent = false;
+        if(foodEvent.inFoodEvent)
+        {
+            isCardsTriggered = false;
+            Continue = true;
+            isFinalFase = false;
+            conversationManager.anchoredPosition = new Vector2(0, 0);
+            ConversationManager.Instance.EndConversation();
+            foodEvent.ContinueFood = false;
+            foodEvent.inFoodEvent = false;
+
+        }
+        else
+        {
+            isCardsTriggered = false;
+            Continue = false;
+            isFinalFase = false;
+            conversationManager.anchoredPosition = new Vector2(0, 0);
+            ConversationManager.Instance.EndConversation();
+            foodEvent.ContinueFood = false;
+            foodEvent.inFoodEvent = false;
+        }
 
     }
+
 
     public void ContinueCards()
     {

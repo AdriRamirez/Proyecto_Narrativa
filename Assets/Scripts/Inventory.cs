@@ -22,6 +22,8 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log("Item not found in inventory: " + item.name);
         }
+
+
     }
 
     public string GetInventoryText()
@@ -38,5 +40,8 @@ public class Inventory : MonoBehaviour
         }
         return inventoryText;
     }
+
+    
+    
 }
 

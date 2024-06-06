@@ -16,7 +16,8 @@ public class EventHandleDialogue : MonoBehaviour
     public GameObject camera;
 
     public GameObject hud;
-    
+    public GameObject door;
+
 
     public Transform cameraTarget;
 
@@ -128,6 +129,7 @@ public class EventHandleDialogue : MonoBehaviour
 
     public void TriggerDialogue2()
     {
+        door.SetActive(false);
         hud.SetActive(true);
         isDialog2 = true;
     }

@@ -20,6 +20,9 @@ public class PlayerPickup : MonoBehaviour
     public CardSelection cardsScript;
     public FoodEvent foodEvent;
 
+    public GameObject ContinueButton;
+    public GameObject ExitButton;
+
 
     void Start()
     {
@@ -51,7 +54,6 @@ public class PlayerPickup : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         
-
         if (!foodEvent.inFoodEvent && !EventHandleDialogue.isDialogTriggered)
         {
             interactText.SetActive(true);
@@ -74,9 +76,10 @@ public class PlayerPickup : MonoBehaviour
         }
 
         // Si el jugador está en rango de un objeto y presiona "E"
-        if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Lemons")
+        if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Fruta")
         {
-            
+            ContinueButton.SetActive(false);
+            ExitButton.SetActive(false);
             interactText.SetActive(false);
             if (foodEvent.ContinueFood)
             { 
@@ -85,17 +88,12 @@ public class PlayerPickup : MonoBehaviour
             }
             
 
-            if (foodEvent.lemonRoll > 2 && foodEvent.rolled)
-            {
-                PickUp();
-                foodEvent.rolled = false;
-                foodEvent.ContinueFood = true;
-            }
-            
-
-        }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Deer")
+        }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Carne")
         {
+            ContinueButton.SetActive(false);
+            ExitButton.SetActive(false);
             interactText.SetActive(false);
+
             if (foodEvent.ContinueFood)
             {
                 foodEvent.GoToDiceScreen2();
@@ -103,15 +101,11 @@ public class PlayerPickup : MonoBehaviour
             }
 
 
-            if (foodEvent.deerRoll > 10 && foodEvent.rolled)
-            {
-                PickUp();
-                foodEvent.rolled = false;
-                foodEvent.ContinueFood = true;
-            }
-
-        }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Water")
+        }else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Agua")
         {
+            ContinueButton.SetActive(false);
+            ExitButton.SetActive(false);
+            interactText.SetActive(false);
 
             if (foodEvent.ContinueFood)
             {
@@ -120,13 +114,52 @@ public class PlayerPickup : MonoBehaviour
             }
 
 
-            if (foodEvent.waterRoll > 2 && foodEvent.rolled)
-            {
-                PickUp();
-                foodEvent.rolled = false;
-                foodEvent.ContinueFood = true;
-            }
+           
         }
+        else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Pescado robado") //Robar
+        {
+            ContinueButton.SetActive(false);
+            ExitButton.SetActive(false);
+            interactText.SetActive(false);
+
+            if (foodEvent.ContinueFood)
+            {
+                foodEvent.GoToDiceScreen4();
+                foodEvent.ContinueFood = false;
+            }
+
+        }
+        else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Peces") //Persuadir
+        {
+            ContinueButton.SetActive(false);
+            ExitButton.SetActive(false);
+            interactText.SetActive(false);
+
+            if (foodEvent.ContinueFood)
+            {
+                foodEvent.GoToDiceScreen5();
+                foodEvent.ContinueFood = false;
+            }
+
+
+
+        }
+        else if (currentItem != null && Input.GetKey(KeyCode.E) && currentItem.name == "Refugio") 
+        {
+            ContinueButton.SetActive(false);
+            ExitButton.SetActive(false);
+            interactText.SetActive(false);
+
+            if (foodEvent.ContinueFood)
+            {
+                foodEvent.GoToDiceScreen6();
+                foodEvent.ContinueFood = false;
+            }
+
+
+
+        }
+
     }
 
     void OnTriggerExit(Collider other)
@@ -142,6 +175,63 @@ public class PlayerPickup : MonoBehaviour
 
       
     }
+    
+    public void StartPickUp()
+    {
+        if (foodEvent.lemonRoll > 2 && foodEvent.rolled)
+        {
+            PickUp();
+            foodEvent.lemonRoll = 0;
+            foodEvent.rolled = false;
+            foodEvent.ContinueFood = true;
+
+        }
+        
+        if (foodEvent.deerRoll > 10 && foodEvent.rolled)
+        {
+            PickUp();
+            foodEvent.deerRoll = 0;
+            foodEvent.rolled = false;
+            foodEvent.ContinueFood = true;
+        }
+        
+        if (foodEvent.waterRoll > 2 && foodEvent.rolled)
+        {
+            PickUp();
+            foodEvent.waterRoll = 0;
+            foodEvent.rolled = false;
+            foodEvent.ContinueFood = true;
+        }
+
+        if (foodEvent.stealRoll > 13 && foodEvent.rolled)
+        {
+            PickUp();
+            foodEvent.waterRoll = 0;
+            foodEvent.rolled = false;
+            foodEvent.ContinueFood = true;
+        }
+
+        if (foodEvent.persuadeRoll > 8 && foodEvent.rolled)
+        {
+            PickUp();
+            foodEvent.waterRoll = 0;
+            foodEvent.rolled = false;
+            foodEvent.ContinueFood = true;
+        }
+
+        if (foodEvent.refugioRoll > 0 && foodEvent.rolled)
+        {
+            PickUp();
+            foodEvent.waterRoll = 0;
+            foodEvent.rolled = false;
+            foodEvent.ContinueFood = true;
+        }
+
+
+
+        ContinueButton.SetActive(true);
+        ExitButton.SetActive(true);
+    }
 
     void PickUp()
     {
@@ -151,8 +241,11 @@ public class PlayerPickup : MonoBehaviour
             inventory.AddItem(currentItem);
 
             // Desactiva el objeto recogido
-            currentItem.SetActive(false);
-
+            if(currentItem.name != "Agua" || currentItem.name != "Peces")
+            {
+                currentItem.SetActive(false);
+            }
+            
             // Elimina el texto del objetivo correspondiente
             UpdateObjectiveUI(currentItem.name);
 
