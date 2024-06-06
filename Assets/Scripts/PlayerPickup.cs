@@ -187,7 +187,7 @@ public class PlayerPickup : MonoBehaviour
 
         }
         
-        if (foodEvent.deerRoll > 10 && foodEvent.rolled)
+        if (foodEvent.deerRoll >= 10 && foodEvent.rolled)
         {
             PickUp();
             foodEvent.deerRoll = 0;
@@ -195,7 +195,7 @@ public class PlayerPickup : MonoBehaviour
             foodEvent.ContinueFood = true;
         }
         
-        if (foodEvent.waterRoll > 2 && foodEvent.rolled)
+        if (foodEvent.waterRoll >= 2 && foodEvent.rolled)
         {
             PickUp();
             foodEvent.waterRoll = 0;
@@ -203,7 +203,7 @@ public class PlayerPickup : MonoBehaviour
             foodEvent.ContinueFood = true;
         }
 
-        if (foodEvent.stealRoll > 13 && foodEvent.rolled)
+        if (foodEvent.stealRoll >= 13 && foodEvent.rolled)
         {
             PickUp();
             foodEvent.waterRoll = 0;
@@ -211,7 +211,7 @@ public class PlayerPickup : MonoBehaviour
             foodEvent.ContinueFood = true;
         }
 
-        if (foodEvent.persuadeRoll > 8 && foodEvent.rolled)
+        if (foodEvent.persuadeRoll >= 8 && foodEvent.rolled)
         {
             PickUp();
             foodEvent.waterRoll = 0;
@@ -219,7 +219,7 @@ public class PlayerPickup : MonoBehaviour
             foodEvent.ContinueFood = true;
         }
 
-        if (foodEvent.refugioRoll > 0 && foodEvent.rolled)
+        if (foodEvent.refugioRoll >= 0 && foodEvent.rolled)
         {
             PickUp();
             foodEvent.waterRoll = 0;

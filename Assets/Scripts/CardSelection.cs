@@ -451,7 +451,7 @@ public class CardSelection : MonoBehaviour
 
         string objectiveNum = "10";
         ElectionScreen.SetActive(false);
-        ElectionScreen_Run.SetActive(false);
+        ElectionScreen_Stone.SetActive(false);
         DiceScreen.SetActive(true);
         objectiveDice.text = objectiveNum;
 
@@ -465,7 +465,7 @@ public class CardSelection : MonoBehaviour
 
         string objectiveNum = "11";
         ElectionScreen.SetActive(false);
-        ElectionScreen_Run.SetActive(false);
+        ElectionScreen_Stone.SetActive(false);
         DiceScreen.SetActive(true);
         objectiveDice.text = objectiveNum;
 
